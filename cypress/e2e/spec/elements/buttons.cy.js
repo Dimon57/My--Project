@@ -8,7 +8,7 @@ describe ('Buttons',()=>{
      buttons.goto('buttons')
         
     })
-    it.only('',()=>{
+    it('Press the buttons',()=>{
         buttons.doubleClickButton()
         buttons.rightClickButton()
         buttons.clickMeButton()
