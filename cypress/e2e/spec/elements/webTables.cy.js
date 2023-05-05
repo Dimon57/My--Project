@@ -1,132 +1,109 @@
-const ADD_BTN = '#addNewRecordButton'
-const FIRST_NAME = '#firstName'
-const LAST_NAME = '#lastName'
-const EMAIL = '#userEmail'
-const AGE = '#age'
-const SALARY = '#salary'
-const DEPARTMENT = '#department'
-const SUBMIT_BTN = '#submit'
-const userName = 'Dimon'
-const userLastName = 'Chernenko'
-const userEmail = 'dimonpyzo13@gmail.com'
-const userAge = '23'
-const userSalary = '100000'
-const departmentUser = 'Ukraine'
+import { WebTablesPage, ADD_BTN, FIRST_NAME, LAST_NAME, EMAIL, AGE,DEPARTMENT,SUBMIT_BTN } from "../../modules/pages/webTables.page"
+
+const webTables = new WebTablesPage
+
 describe('Web Tables', () => {
 
+  const userName = 'Dimon'
+  const userLastName = 'Chernenko'
+  const userEmail = 'dimonpyzo13@gmail.com'
+  const userAge = '23'
+  const userSalary = '100000'
+  const departmentUser = 'Ukraine'
+
     beforeEach('',() => {
-      cy.visit('https://demoqa.com/webtables')
+      webTables.goto('webtables')
     })
   
     it('Filling out the form', () => {
-
-      cy.get(ADD_BTN).click()
-      cy.get(FIRST_NAME).type(userName)
-      cy.get(LAST_NAME).type(userLastName)
-      cy.get(EMAIL).type(userEmail)
-      cy.get(AGE).type(userAge)
-      cy.get(SALARY).type(userSalary)
-      cy.get(DEPARTMENT).type(departmentUser)
-      cy.get(SUBMIT_BTN).click()
-
+      webTables.clickAddBtn()
+      webTables.fillAllFild(userName, userLastName, userEmail, userAge, userSalary, departmentUser)
+      webTables.clickSubmitBtn()
       cy.contains('Dimon').parent().within(()=>{
-        cy.get('[role="gridcell"]').eq(1).should('have.text','Chernenko')
-        cy.get('[role="gridcell"]').eq(2).should('have.text','23')
-        cy.get('[role="gridcell"]').eq(3).should('have.text','dimonpyzo13@gmail.com')
-        cy.get('[role="gridcell"]').eq(4).should('have.text','100000')
-        cy.get('[role="gridcell"]').eq(5).should('have.text','Ukraine')
+        webTables.getElement('[role="gridcell"]').eq(1).should('have.text','Chernenko')
+        webTables.getElement('[role="gridcell"]').eq(2).should('have.text','23')
+        webTables.getElement('[role="gridcell"]').eq(3).should('have.text','dimonpyzo13@gmail.com')
+        webTables.getElement('[role="gridcell"]').eq(4).should('have.text','100000')
+        webTables.getElement('[role="gridcell"]').eq(5).should('have.text','Ukraine')
+
     })
     })
 
     it('Edit button',()=>{
+      webTables.clickAddBtn()
+      webTables.fillAllFild(userName, userLastName, userEmail, userAge, userSalary, departmentUser)
+      webTables.clickSubmitBtn()
 
-      cy.get(ADD_BTN).click()
-      cy.get(FIRST_NAME).type(userName)
-      cy.get(LAST_NAME).type(userLastName)
-      cy.get(EMAIL).type(userEmail)
-      cy.get(AGE).type(userAge)
-      cy.get(SALARY).type(userSalary)
-      cy.get(DEPARTMENT).type(departmentUser)
-      cy.get(SUBMIT_BTN).click()
+      webTables.clickEditBtn()
+      webTables.getElement(FIRST_NAME).clear().type('Dmytro')
+      webTables.getElement(SUBMIT_BTN).click()
 
-      cy.get('[class="rt-tr-group"]').find('[role="gridcell"]').contains('Dimon').parent().within(()=>{
-      cy.get('[id*=edit]').click()
-      })
-
-      cy.get(FIRST_NAME).clear().type('Dmytro')
-      cy.get(SUBMIT_BTN).click()
-
-      cy.get('[class="rt-tr-group"]').find('[role="gridcell"]').contains('Dmytro')
+      webTables.getElement('[class="rt-tr-group"]').find('[role="gridcell"]').contains('Dmytro')
   })
 
     it('Delete button',()=>{
-      cy.get(ADD_BTN).click()
-      cy.get(FIRST_NAME).type(userName)
-      cy.get(LAST_NAME).type(userLastName)
-      cy.get(EMAIL).type(userEmail)
-      cy.get(AGE).type(userAge)
-      cy.get(SALARY).type(userSalary)
-      cy.get(DEPARTMENT).type(departmentUser)
-      cy.get(SUBMIT_BTN).click()
+      webTables.clickAddBtn()
+      webTables.fillAllFild(userName, userLastName, userEmail, userAge, userSalary, departmentUser)
+      webTables.clickSubmitBtn()
 
-      cy.get('[class="rt-tr-group"]').find('[role="gridcell"]').contains('Dimon').parent().within(()=>{
-        cy.get('[id*=delete]').click()
-        })
+      webTables.clickDeleteBtn()
     })
 
     it('Click on the (Type to search)',()=>{
-      cy.get(ADD_BTN).click()
-      cy.get(FIRST_NAME).type(userName)
-      cy.get(LAST_NAME).type(userLastName)
-      cy.get(EMAIL).type(userEmail)
-      cy.get(AGE).type(userAge)
-      cy.get(SALARY).type(userSalary)
-      cy.get(DEPARTMENT).type(departmentUser)
-      cy.get(SUBMIT_BTN).click()
-      cy.get('#searchBox').type(userName)
+      webTables.clickAddBtn()
+      webTables.fillAllFild(userName, userLastName, userEmail, userAge, userSalary, departmentUser)
+      webTables.clickSubmitBtn()
+
+      webTables.clickSearchBox()
     })
 
-    it('The heading of the column by which you want to sort the data',()=>{
-      cy.get('[class="rt-resizable-header-content"]').contains('First Name').click()
+    it.only('The heading of the column by which you want to sort the data',()=>{
+      webTables.clickFirstName()
+      
+      cy.get('[class="rt-table"]').find('[class="rt-resizable-header-content"]:nth-child(1)').invoke('text').then((names) => {
+       
+        // const SORTED = names.sort()
+        // expect(names).to.deep.equal(sorted)
+       
+      })
+
+
+    
+      
+      
+      // webTables.getElement('[class="rt-tr -odd"]').first().find('[role="gridcell"]').eq(0).should('have.text', 'Alden')
+    
     })
 
     it('(Next) button and (Previous) button',()=>{
-      cy.get('select').select('5 rows', { force: true })
-      cy.get(ADD_BTN).click()
-      cy.get(FIRST_NAME).type(userName)
-      cy.get(LAST_NAME).type(userLastName)
-      cy.get(EMAIL).type(userEmail)
-      cy.get(AGE).type(userAge)
-      cy.get(SALARY).type(userSalary)
-      cy.get(DEPARTMENT).type(departmentUser)
-      cy.get(SUBMIT_BTN).click()
+      webTables.clickSelectBtn()
 
-      cy.get(ADD_BTN).click()
-      cy.get(FIRST_NAME).type(userName)
-      cy.get(LAST_NAME).type(userLastName)
-      cy.get(EMAIL).type(userEmail)
-      cy.get(AGE).type(userAge)
-      cy.get(SALARY).type(userSalary)
-      cy.get(DEPARTMENT).type(departmentUser)
-      cy.get(SUBMIT_BTN).click()
+      webTables.clickAddBtn()
+      webTables.fillAllFild(userName, userLastName, userEmail, userAge, userSalary, departmentUser)
+      webTables.clickSubmitBtn()
 
-      cy.get(ADD_BTN).click()
-      cy.get(FIRST_NAME).type(userName)
-      cy.get(LAST_NAME).type(userLastName)
-      cy.get(EMAIL).type(userEmail)
-      cy.get(AGE).type(userAge)
-      cy.get(SALARY).type(userSalary)
-      cy.get(DEPARTMENT).type(departmentUser)
-      cy.get(SUBMIT_BTN).click()
+      webTables.clickAddBtn()
+      webTables.fillAllFild(userName, userLastName, userEmail, userAge, userSalary, departmentUser)
+      webTables.clickSubmitBtn()
+
+      webTables.clickAddBtn()
+      webTables.fillAllFild(userName, userLastName, userEmail, userAge, userSalary, departmentUser)
+      webTables.clickSubmitBtn()
       
-      cy.get('[class="-next"]').click()
-      cy.get('[class="-previous"]').click()
+      webTables.clickNextBtn()
+      webTables.clickPreviousBtn()
     })
-    it.only('Filling out the form incorrectly',()=>{
-      cy.get(ADD_BTN).click()
-      cy.get(FIRST_NAME).type(userName)
-      cy.get(SUBMIT_BTN).click()
-      cy.get('[class="was-validated"]').should('have.css','border-color','rgb(33, 37, 41)')
+    it('Filling out the form incorrectly',()=>{
+      webTables.clickAddBtn()
+      webTables.getElement(FIRST_NAME).type(userName)
+      webTables.clickSubmitBtn()
+
+      webTables.getElement('#lastName').should('have.css','border-color','rgb(220, 53, 69)')
+    })
+    it('A name that does not exist is entered in the search line',()=>{
+      webTables.clickSearchBox()
+
+      webTables.getElement('[class="rt-noData"]').should('have.text','No rows found')
     })
 
 })
