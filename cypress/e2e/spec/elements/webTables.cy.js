@@ -57,22 +57,35 @@ describe('Web Tables', () => {
       webTables.clickSearchBox()
     })
 
-    it.only('The heading of the column by which you want to sort the data',()=>{
-      webTables.clickFirstName()
-      
-      cy.get('[class="rt-table"]').find('[class="rt-resizable-header-content"]:nth-child(1)').invoke('text').then((names) => {
-       
-        // const SORTED = names.sort()
-        // expect(names).to.deep.equal(sorted)
-       
+    it('The heading of the column by which you want to sort the data',()=>{
+      let arr = []
+      let arrSort = []
+      cy.get('[class="rt-table"]').find('[role="rowgroup"]').then((elem)=>{
+        cy.log(elem.length)
+        for (const elemKey in elem) {
+          const text = elem.eq(elemKey).find('[role="gridcell"]').eq(0).text()
+            if(text.length<= 1){
+              break;
+            } else {
+              arr.push(text)
+            }
+        }
       })
+      webTables.clickFirstName()
 
+      cy.get('[class="rt-table"]').find('[role="rowgroup"]').then((elem)=>{
+        cy.log(elem.length)
+        for (const elemKey in elem) {
+          const text = elem.eq(elemKey).find('[role="gridcell"]').eq(0).text()
+          if(text.length<= 1){
+            break;
+          } else {
+            arrSort.push(text)
+          }
+        }
+        expect(arr).to.be.not.eq(arrSort);
 
-    
-      
-      
-      // webTables.getElement('[class="rt-tr -odd"]').first().find('[role="gridcell"]').eq(0).should('have.text', 'Alden')
-    
+      })
     })
 
     it('(Next) button and (Previous) button',()=>{
