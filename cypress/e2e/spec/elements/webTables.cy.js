@@ -60,7 +60,7 @@ describe('Web Tables', () => {
     it('The heading of the column by which you want to sort the data',()=>{
       let arr = []
       let arrSort = []
-      cy.get('[class="rt-table"]').find('[role="rowgroup"]').then((elem)=>{
+      webTables.getElement('[class="rt-table"]').find('[role="rowgroup"]').then((elem)=>{
         cy.log(elem.length)
         for (const elemKey in elem) {
           const text = elem.eq(elemKey).find('[role="gridcell"]').eq(0).text()
@@ -73,7 +73,7 @@ describe('Web Tables', () => {
       })
       webTables.clickFirstName()
 
-      cy.get('[class="rt-table"]').find('[role="rowgroup"]').then((elem)=>{
+      webTables.getElement('[class="rt-table"]').find('[role="rowgroup"]').then((elem)=>{
         cy.log(elem.length)
         for (const elemKey in elem) {
           const text = elem.eq(elemKey).find('[role="gridcell"]').eq(0).text()
