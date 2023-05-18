@@ -22,4 +22,5 @@ export class TextBoxPage extends BasePage{
         this.getElement(PERMANENT_ADDRESS).type(permanentAddress)
         this.getElement(SUBMIT_BTN).click()
     }
+        
 }
