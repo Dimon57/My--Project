@@ -5,6 +5,7 @@ const DOUBLE_CLICK = '#doubleClickBtn'
 const RIGHT_CLICK = '#rightClickBtn'
 const CLICK_ME = '[type="button"]'
 
+
 export const DOUBLE_CLICK_BOARDER = '#doubleClickMessage'
 export const RIGHT_CLICK_BOARDER = '#rightClickMessage'
 export const CLICK_ME_BOARDER = '#dynamicClickMessage'
