@@ -1,8 +1,7 @@
 import { BasePage } from "./basePage.page";
 
-const PRACTICE_FORM = 'Practice Form'
-
 export const SELECTORS = {
+    PRACTICE_FORM: 'Practice Form',
     FIRST_NAME: '#firstName',
     LAST_NAME: '#lastName',
     EMAIL: '#userEmail',
@@ -23,7 +22,7 @@ export const SELECTORS = {
 
 export class PracticeFormPage extends BasePage{
     clickPracticeForm(){
-        cy.contains(PRACTICE_FORM).first().click()
+        cy.contains(SELECTORS.PRACTICE_FORM).first().click()
     }
     getState(){
         cy.contains(SELECTORS.STATE).click({force: true}).type('NCR{enter}')
