@@ -32,7 +32,7 @@ describe ('Text box',() => {
     textBox.getElement(border).find(PERMANENT_ADDRESS).should('have.text',`Permananet Address :${permanentAddress}`) 
   })
 
-  it.skip("Enter wrong email",() => {
+  it("Enter wrong email",() => {
 
     const wrongEmail = 'dimonpyzo57'
 
