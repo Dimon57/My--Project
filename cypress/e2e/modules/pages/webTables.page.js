@@ -25,6 +25,7 @@ export class WebTablesPage extends BasePage{
         this.getElement(SUBMIT_BTN).click()
     }
     fillAllFild(firstName, lastName, email, age, salary, department){
+
         this.getElement(FIRST_NAME).type(firstName)
         this.getElement(LAST_NAME).type(lastName)
         this.getElement(EMAIL).type(email)
@@ -102,5 +103,32 @@ export class WebTablesPage extends BasePage{
         cy.get("body").then(() => {
             expect(beforeSorting).to.be.not.eq(afterSorting);
         })
+        
+
+    }
+    clickEditBtn(){
+        this.getElement('[class="rt-tr-group"]').find('[role="gridcell"]').contains('Dimon').parent().within(()=>{
+            this.getElement('[id*=edit]').click()
+            })
+    }
+    clickDeleteBtn(){
+        this.getElement('[class="rt-tr-group"]').find('[role="gridcell"]').contains('Dimon').parent().within(()=>{
+            this.getElement('[id*=delete]').click()
+            })
+    }
+    clickSearchBox(){
+        this.getElement('#searchBox').type('Dimon')
+    }
+    clickSelectBtn(){
+        cy.get('select').select('5 rows', { force: true })
+    }
+    clickFirstName(){
+        cy.get('[class="rt-resizable-header-content"]').contains('First Name').click()
+    }
+    clickNextBtn(){
+        cy.get('[class="-next"]').click()
+    }
+    clickPreviousBtn(){
+        cy.get('[class="-previous"]').click()
     }
 }
