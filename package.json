@@ -5,11 +5,12 @@
   "main": "index.js",
   "scripts": {
     "cypress:open": "cypress open",
-    "smoke:test" : "npm run cy:run -- --record --spec cypress/e2e/spec.cy.js"
+    "smoke:test": "npm run cy:run -- --record --spec cypress/e2e/spec.cy.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "cypress": "^12.8.1"
   }
 }
